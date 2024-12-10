@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>1A2B</title>
+</head>
+<body>
+	<h1>113306085_HW6_1A2B</h1>
+	<input type="text" id="input" placeholder="請輸入4個不重複的數字">
+	<button onclick="checkAns()">猜！</button>
+	<h2>遊戲紀錄：</h2>
+	<p id="record"></p>
+	<script type="text/javascript">
+		let ansArr = [];
+		let i = 0;
+		while (i < 4) {
+			let num = Math.floor(Math.random() * 10);
+			let flag = true;
+			for (let j=0; j<ansArr.length; j++) {
+				if (num === ansArr[j]) {
+					flag = false;
+					break;
+				}
+			}
+
+			if (flag) {
+				ansArr.push(num);
+				i++;
+			}
+		}
+
+		let times = 0;
+		function checkAns() {
+			let input = document.getElementById("input").value;
+			let inputArr = input.split("");
+			if (inputArr.length !== 4 || new Set(inputArr).size !== inputArr.length || isNaN(input)) {
+				document.getElementById("input").value = "";
+				alert("智障你格式錯了");					
+				return;
+			}
+
+			times++;
+
+			let a=0, b=0;
+			for (let i=0; i<4; i++) {
+				if (parseInt(inputArr[i]) === ansArr[i]) {
+					a++;
+				} else if (ansArr.includes(parseInt(inputArr[i]))) {
+					b++;
+				}
+			}
+			if (a === 4) {
+				alert("你好棒答對了！");
+			}
+			document.getElementById("record").innerText += `第${times}次：${input} → ${a}A${b}B\n`;
+			document.getElementById("input").value = "";
+		}
+	</script>
+</body>
+</html>
